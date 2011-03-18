@@ -680,8 +680,13 @@ var kvoNewAndOld        = CPKeyValueObservingOptionNew | CPKeyValueObservingOpti
 
     if (aPath.indexOf('.') != CPNotFound)
     {
-        var forwarder = [observers objectForKey:[anObserver UID]].forwarder;
-        [forwarder finalize];
+        var observer = [observers objectForKey:[anObserver UID]];
+        
+        if (observer)
+        {
+            var forwarder = [observers objectForKey:[anObserver UID]].forwarder;
+            [forwarder finalize];
+        }
     }
 
     [observers removeObjectForKey:[anObserver UID]];
