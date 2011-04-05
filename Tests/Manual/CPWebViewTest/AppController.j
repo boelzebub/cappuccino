@@ -23,11 +23,16 @@
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
+    [[theWindow contentView] setBackgroundColor:[CPColor grayColor]];
+
     [webView1 setScrollMode:CPWebViewScrollAuto];
-    [webView1 loadHTMLString:"<html><body><img src='http://cappuccino.org/images/cappuccino-icon.png'><img src='http://cappuccino.org/images/cappuccino-icon.png'></body></html>"];
+    [webView1 loadHTMLString:"<html><body style='background-color:transparent'><p>This web view should have a coloured background.</p><img src='http://cappuccino.org/images/cappuccino-icon.png'><img src='http://cappuccino.org/images/cappuccino-icon.png'></body></html>"];
+    [webView1 setBackgroundColor:[CPColor orangeColor]];
 
     [webView2 setScrollMode:CPWebViewScrollNative];
-    [webView2 loadHTMLString:"<html><body><img src='http://cappuccino.org/images/cappuccino-icon.png'><img src='http://cappuccino.org/images/cappuccino-icon.png'></body></html>"];
+    [webView2 loadHTMLString:"<html><body style='background-color:transparent'><p>This web view should be transparent.</p><img src='http://cappuccino.org/images/cappuccino-icon.png'><img src='http://cappuccino.org/images/cappuccino-icon.png'></body></html>"];
+    [webView2 setDrawsBackground:NO];
+    [webView2 setBackgroundColor:[CPColor clearColor]];
 
     [webView3 setScrollMode:CPWebViewScrollAuto];
     [webView3 setMainFrameURL:[[CPBundle mainBundle] pathForResource:"hello_world.html"]];
@@ -48,6 +53,16 @@
 
     [webView6 setScrollMode:CPWebViewScrollAppKit];
     [webView6 setMainFrameURL:"http://www.cappuccino.org"];
+}
+
+- (void)clearAll:(id)sender
+{
+    var allViews = [webView1, webView2, webView3, webView4, webView5, webView6];
+    for (var i = 0; i < 6; i++)
+    {
+        var view = allViews[i];
+        [view loadHTMLString:""];
+    }
 }
 
 - (void)awakeFromCib
